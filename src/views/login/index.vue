@@ -35,7 +35,7 @@
           <!-- 倒计时 -->
           <van-count-down
           v-if="isCountDownShow"
-          :time="1000 * 60"
+          :time="1000 * 5"
           @finish="isCountDownShow = false"
           format="ss秒" />
           <!-- 验证码按钮 -->
