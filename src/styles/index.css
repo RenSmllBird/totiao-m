@@ -80,6 +80,7 @@ body {
 .login-container .login_header {
   background-color: #3296fa;
 }
-.login-container .login_header .van-nav-bar__title {
+.login-container .login_header .van-nav-bar__title,
+.login-container .login_header .van-icon {
   color: #fff;
 }
