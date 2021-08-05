@@ -49,7 +49,7 @@ export default {
         const { results } = data.data
         console.log(results)
         // 2. 把数据添加到 list 数组中(追加！！！)
-        // this.list.push(...results)
+        this.list.push(...results)
         // 3. 设置本次加载中 loading 状态结束
         this.loading = false
         // 4. 判断数据是否加载结束(处理页码)
@@ -60,9 +60,9 @@ export default {
         }
       } catch (error) {
         console.log(error)
+        this.$toast('获取文章列表失败！')
         this.loading = false
         this.error = true
-        this.$toast('获取文章列表失败！')
       }
     }
   }
