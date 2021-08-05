@@ -99,8 +99,10 @@ export default {
       try {
         const res = await login(user)
         this.setUser(res.data.data)
-        console.log(res)
+        // console.log(res)
         this.$toast('登录成功！')
+        // 登录成功跳转到my页面
+        this.$router.push('/my')
       } catch (error) {
         // 根据后端返回接口提示对应的内容
         if (error.response.status === 400) {
