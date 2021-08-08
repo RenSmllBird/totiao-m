@@ -1,7 +1,11 @@
 <template>
   <div class="article-list">
     <!-- 下拉刷新 -->
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :success-text="promptText" :success-duration="1500">
+    <van-pull-refresh
+    v-model="isLoading"
+    @refresh="onRefresh"
+    :success-text="promptText"
+    :success-duration="1500">
     <van-list
       v-model="loading"
       :finished="finished"

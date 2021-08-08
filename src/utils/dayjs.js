@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import Vue from 'vue'
 // 编译语言为中文
 import 'dayjs/locale/zh-cn'
-//
+// 导入relativeTime组件
 import relativeTime from 'dayjs/plugin/relativeTime'
 
 // 全局使用简体中文

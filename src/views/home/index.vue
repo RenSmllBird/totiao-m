@@ -33,7 +33,8 @@
        position="bottom"
        :style="{ height: '100%' }" >
        <!--  -->
-       <channelEdit></channelEdit>
+       <channelEdit
+       :myChannels="channels" :active="active" @updateActive='updateActiveFn'></channelEdit>
        <!--  -->
     </van-popup>
   </div>
@@ -57,7 +58,9 @@ export default {
       isChannelEditShow: false
     }
   },
-  computed: {},
+  computed: {
+
+  },
   watch: {},
   created() {
     this.loadChannels()
@@ -74,6 +77,14 @@ export default {
         console.log(error)
         this.$toast('获取用户频道列表失败！')
       }
+    },
+    // 接收子传父的索引号来改变active的状态
+    updateActiveFn(index, show) {
+      // console.log(index);
+      this.active = index
+
+      // 非编辑状态下点击channel关闭汉堡弹出层
+      this.isChannelEditShow = show
     }
   }
 }
