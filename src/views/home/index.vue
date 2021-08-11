@@ -9,6 +9,7 @@
         size="small"
         round
         icon="search"
+        to="/search"
       >搜索</van-button>
     </van-nav-bar>
     <van-tabs v-model="active" swipeable animated class="channel-tabs">
