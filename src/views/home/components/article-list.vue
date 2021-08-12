@@ -20,7 +20,7 @@
       :title="item.title" /> -->
       <articleItem
       v-for="item in list"
-      :key="item.art_id"
+      :key="item.art_id.toString()"
       :article="item"
       ></articleItem>
       <!-- 文章列表组件 -->

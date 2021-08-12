@@ -50,7 +50,7 @@ export default {
         })
         // 3 结构获取的数据
         const { results } = data.data
-        console.log(results)
+        // console.log(results)
         // 4 添加进list数组中
         this.list.push(...results)
         // 5 改变loading状态为false 继续加载更多

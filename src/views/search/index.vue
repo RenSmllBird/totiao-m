@@ -8,9 +8,10 @@
          v-model="searchText"
          show-action
          placeholder="请输入搜索关键词"
-          background="#3296fa"
+         background="#3296fa"
          @search="onSearch"
          @cancel="onCancel"
+         @focus="isResultShow=false"
        />
     </form>
     <!-- 搜索结果 -->
@@ -21,11 +22,12 @@
     :searchText="searchText"
     @search="onSearch" ></searchSuggestion>
     <!-- 搜索历史 -->
-    <searchHistory v-else></searchHistory>
+    <searchHistory v-else :searchHistories="searchHistories" @search="onSearch" @clearAllSearch="searchHistories= []"></searchHistory>
   </div>
 </template>
 
 <script>
+import { getItem, setItem } from '@/utils/storage'
 import searchHistory from './components/searchHistory.vue'
 import searchSuggestion from './components/searchSuggestion.vue'
 import searchResult from './components/searchResult.vue'
@@ -40,18 +42,33 @@ export default {
   data() {
     return {
       searchText: '',
-      isResultShow: false
+      isResultShow: false,
+      searchHistories: getItem('SEARCH_HISTORIES') || []
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    searchHistories: {
+      handler(val) {
+        setItem('SEARCH_HISTORIES', val)
+      },
+      deep: true
+    }
+  },
   created() {},
   mounted() {},
   methods: {
     onSearch(val) {
-      console.log(val)
+      // console.log(val)
       this.searchText = val
       this.isResultShow = true
+      // 判断获取的输入内容有没有在searchHistories数组中已经存在
+      const index = this.searchHistories.indexOf(val)
+      if (index !== -1) {
+        // 已存在 把之前的删除 然后把回去的值增加为最新
+        this.searchHistories.splice(index, 1)
+      }
+      this.searchHistories.unshift(val)
     },
     onCancel() {
       this.$router.back()
