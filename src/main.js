@@ -18,6 +18,24 @@ import '@/utils/dayjs'
 // 全局注册vant组件
 Vue.use(Vant)
 
+// 前置守卫
+router.beforeEach((to, from, next) => {
+  // 去的页面是否需要登录
+  if (to.meta.needLogin) {
+    // 需要登录
+    if (store.state.user) {
+      // 登录了 放行继续下一步
+      next()
+    } else {
+      // 未登录 非法进入，默认去登录页面
+      next('/login')
+    }
+  } else {
+    // 不需要登录
+    next()
+  }
+})
+
 Vue.config.productionTip = false
 new Vue({
   router,

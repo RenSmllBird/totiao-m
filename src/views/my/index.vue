@@ -10,7 +10,7 @@
         <span class="name">{{userInfo.name}}</span>
       </div>
       <div class="right">
-         <van-button size="mini" round>编辑资料</van-button>
+         <van-button size="mini" to="/user/profile" round>编辑资料</van-button>
       </div>
       </div>
         <!-- 用户数据 -->
@@ -101,14 +101,21 @@ export default {
         })
     },
     async loadUserInfo() {
-      try {
-        const { data } = await getUserInfo()
-        this.$toast('获取用户信息成功！')
-        // console.log(data.data)
-        this.userInfo = data.data
-      } catch (error) {
-        console.log(error)
-        this.$toast('获取用户信息失败！')
+      if (this.user) {
+        // 用户已登录
+        try {
+          const { data } = await getUserInfo()
+          this.$toast('获取用户信息成功！')
+          // console.log(data.data)
+          this.userInfo = data.data
+          console.log(this.userInfo)
+        } catch (error) {
+          // console.log(error)
+          this.$toast('获取用户信息失败！')
+        }
+      } else {
+        // 用户未登录
+        return this.$toast('请先登录！')
       }
     }
   }
