@@ -53,7 +53,7 @@
         <!-- /用户信息 -->
 
         <!-- 文章内容 -->
-        <div class="article-content  markdown-body" v-html="article.content"></div>
+        <div class="article-content  markdown-body" ref="articleContent" v-html="article.content"></div>
         <van-divider>正文结束</van-divider>
         <!-- 底部区域 -->
         <div class="article-bottom">
@@ -102,6 +102,7 @@
 
 <script>
 import { getArticleById } from '@/api/article'
+import { ImagePreview } from 'vant'
 export default {
   name: 'ArticleIndex',
   components: {},
@@ -124,16 +125,28 @@ export default {
   created () {
     this.loadArticles()
   },
-  mounted () {},
+  mounted () {
+    // console.log(this.$refs.articleContent)
+
+  },
   methods: {
+
     async loadArticles() {
       try {
         const { data } = await getArticleById(this.articleId)
         // console.log(data)
-        if (Math.random() > 0.5) {
-          JSON.parse('dsankljdnskaljndlkjsa')
-        }
+        // 模拟报错
+        // if (Math.random() > 0.5) {
+        //   JSON.parse('dsankljdnskaljndlkjsa')
+        // }
         this.article = data.data
+
+        // 使用异步方法去获取绑定的dom元素
+        setTimeout(() => {
+          // console.log(this.$refs.articleContent)
+          // 调用预览图片处理函数
+          this.previewImage()
+        }, 0)
       } catch (error) {
         console.log(error.response)
         if (error.response && error.response.status === 404) {
@@ -142,6 +155,25 @@ export default {
         this.$toast('获取新闻文章详情数据失败！')
       }
       this.loading = false
+    },
+    // 预览图片处理函数
+    previewImage() {
+      const articleContents = this.$refs.articleContent
+      const imgs = articleContents.querySelectorAll('img')
+      console.log(imgs)
+
+      const images = []
+      // 循环遍历把获取的数组中的每个img对象中的图片路径添加到新数组中
+      imgs.forEach((item, index) => {
+        images.push(item.src)
+        //  给每一个图片元素绑定点击事件 调用vant组件中的ImagePreview   startPosition 默认从第几个开始
+        item.onclick = () => {
+          ImagePreview({
+            images,
+            startPosition: index
+          })
+        }
+      })
     }
   }
 }
